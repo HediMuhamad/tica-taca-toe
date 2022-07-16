@@ -1,0 +1,18 @@
+.tableContainer{
+	padding: 2em;
+	box-shadow: 0.3em 0.3em 0.5em 0.05em rgba($color: $my-primary-rgb, $alpha: $low-opacity);
+
+	.tableComponent{
+		width: 100%;
+		aspect-ratio: 1;
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		grid-template-rows: repeat(3, 1fr);
+		gap: 5%;
+
+		background-image: url('../public/imgs/table.svg');
+		background-size: 105%;
+		background-position: center;
+		overflow: hidden;
+	}
+}

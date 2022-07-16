@@ -1,0 +1,23 @@
+.tableCell{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: 0.5s linear;
+	opacity: 0;
+	width: 80%;
+	height: 80%;
+	margin: auto;
+}
+
+.Omarker, .Xmarker{
+	opacity: 1;
+	pointer-events: none;
+}
+
+.Omarker {
+	background-image: url('../public/imgs/O-marker.svg');
+}
+
+.Xmarker {
+	background-image: url('../public/imgs/X-marker.svg');
+}

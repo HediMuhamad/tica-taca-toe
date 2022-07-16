@@ -1,9 +1,33 @@
 .light{
   $my-primary:  #FCFCFF;
+  $my-primary-rgb: rgb(252, 252, 255);
   $my-secondary:#07090F;
+  $my-primary-rgb: rgb(7, 9, 15);
 }
 
 .dark{
-  $my-primary:  #FCFCFF;
-  $my-secondary:#07090F;
+  $my-primary:  #07090F;
+  $my-primary-rgb: rgb(7, 9, 15);
+  $my-secondary:#FCFCFF;
+  $my-primary-rgb: rgb(252, 252, 255);
 }
+
+.container{
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main{
+  height: 40em;
+  aspect-ratio: 1;
+
+  display: grid;
+  grid-template-columns: 87% 8%;
+  grid-template-rows: 87% 8%;
+  gap: 5%;
+}
+
