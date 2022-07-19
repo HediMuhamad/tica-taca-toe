@@ -1,0 +1,13 @@
+.themeController{
+	background-size: 70%;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.darkMode{
+	background-image: url('../public/imgs/sun-icon.svg');
+}
+
+.lightMode{
+	background-image: url('../public/imgs/moon-icon.svg');
+}
