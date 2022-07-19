@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.scss'
 import TableComponent from '../components/table-component/table-component'
+import PropertiesComponent from '../components/properties-component/properties-component'
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <TableComponent/>
+        <PropertiesComponent/>
       </main>
     </div>
   )

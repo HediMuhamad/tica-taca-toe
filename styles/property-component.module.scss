@@ -1,0 +1,121 @@
+.property{
+	width: 100%;
+	height: 26%;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+	position: relative;
+
+	.header{
+		width: 70%;
+		aspect-ratio: 1;
+
+		position: absolute;
+		z-index: 2;
+		transform: translateY(-135%);
+
+		background-repeat: no-repeat;
+		background-size: 72.5%;
+		background-position: center;
+
+		background-color: white;
+	}
+
+	.border{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		position: absolute;
+
+		height: 80%;
+		width: 100%;
+		border: 0.01em solid $my-secondary;
+	
+		.valueContainer{
+			width: 100%;
+			height: 50%;
+			z-index: 10;
+
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+
+			@-moz-document url-prefix(){
+				.property-value{
+					padding-top: 15%;
+				}
+			}
+
+			.value{
+				height: 100%;
+				font-size: 1.5em;
+				text-align: center;
+				writing-mode: vertical-lr;
+				text-orientation: upright;
+				font-weight: 800;
+				font-style: italic;
+			}
+
+		}
+	}
+
+	.footer {
+		width: 85%;
+		position: absolute;
+		z-index: 2;
+		transform: translateY(46px);
+		background-color: $my-primary;
+
+		p {
+			transform: scaleY(1.2);
+			text-align: center;
+			font-size: 14px;
+			font-weight: 800;
+		}
+	}
+
+}
+
+.Omarker{
+
+	.header{
+		background-image: url('../public/imgs/O-marker-sm.svg');
+	}
+
+	.border .valueContainer .value, .footer p {
+		color: $my-blue;
+	}
+		
+}
+
+.Xmarker{
+
+	.header{
+		background-image: url('../public/imgs/X-marker-sm.svg');
+	}
+
+	.border .valueContainer .value, .footer p {
+		color: $my-green;
+	}
+}
+
+.Dmarker{
+
+	.header{
+		width: 75% !important;
+		aspect-ratio: 1 !important;
+		transform: translateY(-125%) !important;
+		text-align: center !important;
+
+		background-image: url('../public/imgs/both.svg');
+	}
+
+	.border .valueContainer .value, .footer p {
+		color: $my-gray;
+	}
+}
