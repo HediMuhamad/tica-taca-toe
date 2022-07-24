@@ -53,12 +53,11 @@
 
 			.value{
 				height: 100%;
-				font-size: 1.5em;
+				font-size: 1.6em;
 				text-align: center;
 				writing-mode: vertical-lr;
 				text-orientation: upright;
-				font-weight: 800;
-				font-style: italic;
+				font-weight: 900;
 			}
 
 		}
@@ -68,14 +67,13 @@
 		width: 85%;
 		position: absolute;
 		z-index: 2;
-		transform: translateY(46px);
+		transform: translateY(45px);
 		background-color: $my-primary;
 
 		p {
-			transform: scaleY(1.2);
 			text-align: center;
-			font-size: 14px;
-			font-weight: 800;
+			font-size: 1.05em;
+			font-weight: 900;
 		}
 	}
 

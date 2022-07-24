@@ -1,9 +1,8 @@
 html,
 body {
-  font-family: 'Montserrat';
-  font-weight: 700;
   width: 100vw;
   height: 100vh;
+  font-weight: 700;
 }
 
 body #__next{
@@ -16,4 +15,5 @@ body #__next{
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  font-family: 'Lato';
 }

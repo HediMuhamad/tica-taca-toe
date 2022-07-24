@@ -1,9 +1,25 @@
 .idField[idtype="against"] {
 	color: $my-blue !important;
+	.borderContainer > .idValueContainer > .idValue {
+		&::selection{
+			background-color: rgba($color: $my-blue, $alpha: $low-opacity);
+		}
+		&::-moz-selection{
+			background-color: rgba($color: $my-blue, $alpha: $low-opacity);
+		}
+	}
 }
 
 .idField[idtype="yours"] {
 	color: $my-green !important;
+	.borderContainer > .idValueContainer > .idValue {
+		&::selection{
+			background-color: rgba($color: $my-green, $alpha: $low-opacity);
+		}
+		&::-moz-selection{
+			background-color: rgba($color: $my-green, $alpha: $low-opacity);
+		}
+	}
 }
 
 .idField {
@@ -24,12 +40,14 @@
 		position: absolute;
 		z-index: 2;
 
+		transform: scaleY(0.9) translateX(0.05em) translateY(0.05em);
+
 		height: 70%;
 		width: min-content;
 		background-color: $my-primary;
 
 		font-size: 2em;
-		font-weight: 600;
+		font-weight: 700;
 	}
 
 	.borderContainer {
@@ -54,15 +72,18 @@
 			height: 80%;
 
 			.idValue {
+				// font-family: "Lato";
 				text-align: center;
 				width: 100%;
-				height: 100%;
+				height: 80%;
 				font-size: 1.7em;
-				font-weight: 600;
+				font-weight: 700;
 				border: none;
 				outline: none;
 				background-color: transparent;
 				color: inherit;
+				user-select: text;
+				
 			}
 
 		}
