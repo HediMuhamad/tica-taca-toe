@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from '../../styles/theme-controller.module.scss'
+import styles from '../../styles/theme-controller-component.module.scss'
 
 
 const ThemeController = () => {

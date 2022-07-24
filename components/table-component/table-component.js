@@ -1,5 +1,5 @@
 import styles from "../../styles/table-component.module.scss"
-import TableCell from "../table-cell/table-cell"
+import TableCell from "../table-cell-component/table-cell-component"
 
 const TableComponent = () => {
 	return(

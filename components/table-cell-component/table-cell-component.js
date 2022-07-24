@@ -1,5 +1,5 @@
 import { useRef } from "react"
-import styles from "../../styles/table-cell.module.scss"
+import styles from "../../styles/table-cell-component.module.scss"
 
 const clickHandler = (cellRef, markerType) => {
 	markerType = false;

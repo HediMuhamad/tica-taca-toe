@@ -1,0 +1,74 @@
+.GameModeComponent {
+
+
+	&[playingmode="single-player"]{
+		.GameModeContainer { 
+			.detectorCircle{
+				left: 0px;
+			}
+			.gameMode[modetype="singlePlayer"]{
+				background-color: white;
+			}
+		}
+	}
+
+	&[playingmode="multi-player"]{
+		.GameModeContainer { 
+			.detectorCircle{
+				left: 54%;
+			}
+			.gameMode[modetype="multiPlayer"]{
+				background-color: white;
+			}
+		}
+	}
+
+	.GameModeContainer {
+		width: 90%;
+		height: 100%;
+
+		border: 1px solid $my-secondary;
+		border-radius: 100000px;
+		overflow: hidden;
+		position: relative;
+		display: flex;
+		justify-content: space-between;
+		margin: auto;
+		
+		*{
+			transition: 0.5s ease-in-out;
+		}
+
+		.gameMode {
+			height: 100%;
+			aspect-ratio: 1;
+			display: inline-block;
+
+			mask-position: center !important;
+			mask-repeat: no-repeat !important;
+			mask-size: 60% !important;
+			background-color: $my-secondary;
+
+			&[modetype="singlePlayer"] {
+				-webkit-mask-image: url("../public/imgs/single-user-icon.svg");
+				mask-image: url("../public/imgs/single-user-icon.svg");
+			}
+
+			&[modetype="multiPlayer"] {
+				-webkit-mask-image: url("../public/imgs/multi-user-icon.svg");
+				mask-image: url("../public/imgs/multi-user-icon.svg");
+			}
+		}
+
+		.detectorCircle {
+			position: absolute;
+			background-color: $my-secondary;
+			height: 100%;
+			aspect-ratio: 1;
+			border-radius: 100%;
+			z-index: -1;
+
+		}
+
+	}
+}

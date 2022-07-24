@@ -2,7 +2,8 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.scss'
 import TableComponent from '../components/table-component/table-component'
 import PropertiesComponent from '../components/properties-component/properties-component'
-import ThemeController from '../components/theme-controller/theme-controller'
+import SettingsComponent from '../components/settings-component/settings-component'
+import ThemeControllerComponent from '../components/theme-controller-component/theme-controller-component'
 
 export default function Home() {
   return (
@@ -16,8 +17,8 @@ export default function Home() {
       <main className={styles.main}>
         <TableComponent/>
         <PropertiesComponent/>
-        <div></div>
-        <ThemeController/>
+        <SettingsComponent/>
+        <ThemeControllerComponent/>
       </main>
     </div>
   )
