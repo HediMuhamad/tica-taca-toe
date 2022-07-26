@@ -9,6 +9,41 @@
 
 	position: relative;
 
+	&[markertype="O"]{
+		.header{
+			background-image: url('../public/imgs/O-marker-sm.svg');
+		}
+	
+		.border .valueContainer .value, .footer p {
+			color: $my-blue;
+		}
+	}
+	
+	&[markertype="X"]{
+		.header{
+			background-image: url('../public/imgs/X-marker-sm.svg');
+		}
+	
+		.border .valueContainer .value, .footer p {
+			color: $my-green;
+		}
+	}
+	
+	&[markertype="D"]{
+		.header{
+			width: 75% !important;
+			aspect-ratio: 1 !important;
+			transform: translateY(-125%) !important;
+			text-align: center !important;
+	
+			background-image: url('../public/imgs/both.svg');
+		}
+	
+		.border .valueContainer .value, .footer p {
+			color: $my-gray;
+		}
+	}
+
 	.header{
 		width: 70%;
 		aspect-ratio: 1;
@@ -77,43 +112,4 @@
 		}
 	}
 
-}
-
-.Omarker{
-
-	.header{
-		background-image: url('../public/imgs/O-marker-sm.svg');
-	}
-
-	.border .valueContainer .value, .footer p {
-		color: $my-blue;
-	}
-		
-}
-
-.Xmarker{
-
-	.header{
-		background-image: url('../public/imgs/X-marker-sm.svg');
-	}
-
-	.border .valueContainer .value, .footer p {
-		color: $my-green;
-	}
-}
-
-.Dmarker{
-
-	.header{
-		width: 75% !important;
-		aspect-ratio: 1 !important;
-		transform: translateY(-125%) !important;
-		text-align: center !important;
-
-		background-image: url('../public/imgs/both.svg');
-	}
-
-	.border .valueContainer .value, .footer p {
-		color: $my-gray;
-	}
 }

@@ -2,12 +2,14 @@
 	background-size: 70%;
 	background-repeat: no-repeat;
 	background-position: center;
-}
+	cursor: pointer;
 
-.darkMode{
-	background-image: url('../public/imgs/sun-icon.svg');
-}
+	&[theme="light"]{
+		background-image: url('../public/imgs/moon-icon.svg');
+	}
 
-.lightMode{
-	background-image: url('../public/imgs/moon-icon.svg');
+	&[theme="dark"]{
+		background-image: url('../public/imgs/sun-icon.svg');
+	}
+
 }

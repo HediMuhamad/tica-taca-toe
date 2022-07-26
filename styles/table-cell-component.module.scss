@@ -1,4 +1,17 @@
 .tableCell{
+
+	&[markertype="O"]{
+		opacity: 1;
+		pointer-events: none;
+		background-image: url('../public/imgs/O-marker.svg');
+	}
+
+	&[markertype="X"]{
+		opacity: 1;
+		pointer-events: none;
+		background-image: url('../public/imgs/X-marker.svg');
+	}
+
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -12,17 +25,5 @@
 	background-size: 70%;
 	background-repeat: no-repeat;
 	background-position: center;
-}
-
-.Omarker, .Xmarker{
-	opacity: 1;
-	pointer-events: none;
-}
-
-.Omarker {
-	background-image: url('../public/imgs/O-marker.svg');
-}
-
-.Xmarker {
-	background-image: url('../public/imgs/X-marker.svg');
+	cursor: pointer;
 }

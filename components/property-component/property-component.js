@@ -3,23 +3,10 @@ import styles from "../../styles/property-component.module.scss"
 const PropertyComponent = ({value, type}) => {
     type = type.toUpperCase();
     
-    let propertyClass = undefined;
-    let valueClass = undefined;
-    let title = '';
+    let title = 'Wins';
 
-    switch(type){
-        case 'O':
-            propertyClass = styles.Omarker;
-            title = 'Wins';
-            break;
-        case 'X':
-            propertyClass = styles.Xmarker;
-            title = 'Wins';
-            break;
-        case 'D':
-            propertyClass = styles.Dmarker;
-            title = 'Draw';
-            break;
+    if(type==="D"){
+        title = 'Draw';
     }
 
     if(value>=99){
@@ -27,7 +14,7 @@ const PropertyComponent = ({value, type}) => {
     }
 
 	return(
-		<div className={`${styles.property} ${propertyClass} ${valueClass}`}>
+		<div className={styles.property} markertype={type}>
                 <div className={styles.header}></div>
                 <div className={styles.border}>
                     <div className={styles.valueContainer}>

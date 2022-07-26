@@ -11,7 +11,7 @@ const ThemeController = () => {
 
 	return (
 		<div
-			className={`${styles.themeController} ${theme==="light" ? styles.lightMode : styles.darkMode}`}
+			className={styles.themeController} theme={theme}
 			onClick={clickHandler}
 		></div>
 	)

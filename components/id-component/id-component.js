@@ -19,7 +19,7 @@ const IdComponent = (props) => {
 	
 
 	return(
-		<div className={`${styles.idField}`} idtype={markerType}>
+		<div className={styles.idField} idtype={markerType}>
 			<div className={styles.hashSymbol}>#</div>
 			<div className={styles.borderContainer}>
 				<div className={styles.idValueContainer}>
@@ -27,7 +27,7 @@ const IdComponent = (props) => {
 							placeholder={'AUTO'} className={styles.idValue} value={value}
 							onChange={valueHandler} />
 				</div>
-				<div className={`${styles.idNameContainer}`}>
+				<div className={styles.idNameContainer}>
 					<div className={styles.idNameValue}>{name}</div>
 				</div>
 			</div>
