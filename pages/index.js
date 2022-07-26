@@ -5,6 +5,11 @@ import PropertiesComponent from '../components/properties-component/properties-c
 import SettingsComponent from '../components/settings-component/settings-component'
 import ThemeControllerComponent from '../components/theme-controller-component/theme-controller-component'
 
+import AppContextProvider from '../context/appContext'
+import PropertiesContextProvider from '../context/propertiesContext'
+import SettingsContextProvider from '../context/settingsContext'
+import TableContextProvider from '../context/tableContext'
+
 export default function Home() {
   return (
     <div className={styles.container}>
@@ -15,10 +20,18 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <TableComponent/>
-        <PropertiesComponent/>
-        <SettingsComponent/>
-        <ThemeControllerComponent/>
+        <AppContextProvider>
+          <TableContextProvider>
+            <TableComponent/>
+          </TableContextProvider>
+          <PropertiesContextProvider>
+            <PropertiesComponent/>
+          </PropertiesContextProvider>
+          <SettingsContextProvider>
+            <SettingsComponent/>
+          </SettingsContextProvider>
+          <ThemeControllerComponent/>
+        </AppContextProvider>
       </main>
     </div>
   )

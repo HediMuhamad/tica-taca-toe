@@ -1,4 +1,4 @@
-.idField[idtype="against"] {
+.idField[idtype="O"] {
 	color: $my-blue !important;
 	.borderContainer > .idValueContainer > .idValue {
 		&::selection{
@@ -10,7 +10,7 @@
 	}
 }
 
-.idField[idtype="yours"] {
+.idField[idtype="X"] {
 	color: $my-green !important;
 	.borderContainer > .idValueContainer > .idValue {
 		&::selection{

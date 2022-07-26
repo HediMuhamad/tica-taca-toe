@@ -1,1 +1,69 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="722" height="722" viewBox="0 0 722 722"><defs><style>.a{fill:none;stroke:#707070;stroke-width:6px;}</style></defs><g transform="translate(-539.5 -121.5)"><line class="a" y1="722" transform="translate(779.5 121.5)"/><line class="a" y1="722" transform="translate(1020.5 121.5)"/><line class="a" x2="722" transform="translate(539.5 362.5)"/><line class="a" x1="722" transform="translate(539.5 602.5)"/></g></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="722"
+   height="722"
+   viewBox="0 0 722 722"
+   version="1.1"
+   id="svg16"
+   sodipodi:docname="table.svg"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview18"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="1"
+     inkscape:cx="483"
+     inkscape:cy="306"
+     inkscape:window-width="1920"
+     inkscape:window-height="1019"
+     inkscape:window-x="0"
+     inkscape:window-y="29"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g14" />
+  <defs
+     id="defs4">
+    <style
+       id="style2">.a{fill:none;stroke:#707070;stroke-width:6px;}</style>
+  </defs>
+  <g
+     transform="translate(-539.5 -121.5)"
+     id="g14">
+    <line
+       class="a"
+       y1="844.23303"
+       id="line6"
+       x1="785.41187"
+       x2="785.41187"
+       y2="122.23301" />
+    <line
+       class="a"
+       y1="843.5"
+       id="line8"
+       x1="1014.5"
+       x2="1014.5"
+       y2="121.5" />
+    <line
+       class="a"
+       x2="1261.5"
+       id="line10"
+       x1="539.5"
+       y1="368.5"
+       y2="368.5" />
+    <line
+       class="a"
+       x1="1261.5"
+       id="line12"
+       y1="596.5"
+       x2="539.5"
+       y2="596.5" />
+  </g>
+</svg>

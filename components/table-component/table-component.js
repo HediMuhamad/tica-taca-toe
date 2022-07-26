@@ -7,12 +7,13 @@ const TableComponent = () => {
 			<div className={styles.tableComponent}>
 				{
 					[...Array(9)].map((_,i)=>{
-						return <TableCell key={i} id={i+1} />
+						return <TableCell key={i} id={i}/>
 					})
 				}
 			</div>
 		</div>
 	)
+
 }
 
 export default TableComponent

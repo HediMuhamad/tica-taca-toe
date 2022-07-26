@@ -1,17 +1,17 @@
-import { useState } from "react";
+import { useContext } from "react";
 import styles from '../../styles/theme-controller-component.module.scss'
-
+import { AppContext} from '../../context/appContext.js'
 
 const ThemeController = () => {
-	const [theme, setTheme] = useState(true);
+	const {props: {theme}, actions: {switchTheme}} = useContext(AppContext);
 
 	const clickHandler = () => {
-		setTheme(!theme)
+		switchTheme();
 	}
 
 	return (
 		<div
-			className={`${styles.themeController} ${theme ? styles.lightMode : styles.darkMode}`}
+			className={`${styles.themeController} ${theme==="light" ? styles.lightMode : styles.darkMode}`}
 			onClick={clickHandler}
 		></div>
 	)
