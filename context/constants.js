@@ -6,15 +6,17 @@ export const DEFAULT_APP_PROPS = {
 	actions: {
 		switchTheme: undefined,
 		switchMarkerType: undefined,
+		setPersisted: undefined
 	}
 }
 
 export const DEFAULT_TABLE_PROPS = {
 	props: {
-		tableCells: [].fill(undefined)
+		tableCells: new Array(9)
 	},
 	actions: {
 		addTableCell: undefined,
+		setPersisted: undefined
 	}
 }
 
@@ -27,7 +29,8 @@ export const DEFAULT_PROPERTIES_PROPS = {
 	actions: {
 		setOWins: undefined,
 		setXWins: undefined,
-		setDraws: undefined
+		setDraws: undefined,
+		setPersisted: undefined
 	}
 }
 
@@ -41,5 +44,6 @@ export const DEFAULT_SETTINGS_PROPS = {
 		setYourId: undefined,
 		setAgainstId: undefined,
 		switchPlayingMode: undefined,
+		setPersisted: undefined
 	}
 }
