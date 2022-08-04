@@ -4,10 +4,15 @@ import TableComponent from '../components/table-component/table-component'
 import PropertiesComponent from '../components/properties-component/properties-component'
 import SettingsComponent from '../components/settings-component/settings-component'
 import ThemeControllerComponent from '../components/theme-controller-component/theme-controller-component'
+import { useContext } from 'react'
+import { AppContext } from '../context/appContext'
 
 export default function Home() {
+
+  const theme = useContext(AppContext).props.theme;
+
   return (
-    <div className={styles.container}>
+    <div className={styles.container} theme={theme} >
       <Head>
         <title>Tica-Taca-Toe</title>
         <meta name="description" content="Multi-Player and Signle-Player Tic-Tac-Toe Game."/>

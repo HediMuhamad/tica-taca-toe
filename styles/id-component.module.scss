@@ -1,23 +1,23 @@
 .idField[idtype="O"] {
-	color: $my-blue !important;
+	color: var(--my-blue) !important;
 	.borderContainer > .idValueContainer > .idValue {
 		&::selection{
-			background-color: rgba($color: $my-blue, $alpha: $low-opacity);
+			background-color: rgba($color: var(--my-blue), $alpha: var(--low-opacity));
 		}
 		&::-moz-selection{
-			background-color: rgba($color: $my-blue, $alpha: $low-opacity);
+			background-color: rgba($color: var(--my-blue), $alpha: var(--low-opacity));
 		}
 	}
 }
 
 .idField[idtype="X"] {
-	color: $my-green !important;
+	color: var(--my-green) !important;
 	.borderContainer > .idValueContainer > .idValue {
 		&::selection{
-			background-color: rgba($color: $my-green, $alpha: $low-opacity);
+			background-color: rgba($color: var(--my-green), $alpha: var(--low-opacity));
 		}
 		&::-moz-selection{
-			background-color: rgba($color: $my-green, $alpha: $low-opacity);
+			background-color: rgba($color: var(--my-green), $alpha: var(--low-opacity));
 		}
 	}
 }
@@ -44,7 +44,7 @@
 
 		height: 70%;
 		width: min-content;
-		background-color: $my-primary;
+		background-color: var(--my-primary);
 
 		font-size: 2em;
 		font-weight: 700;
@@ -59,7 +59,7 @@
 
 		margin-left: 10%;
 
-		border: 0.05em solid rgba($color: $my-secondary, $alpha: $low-opacity);
+		border: 0.05em solid var(--my-secondary);
 
 		padding: 0% 5% 0% 12%;
 
@@ -101,7 +101,7 @@
 			.idNameValue {
 				width: fit-content;
 
-				background-color: $my-primary;
+				background-color: var(--my-primary);
 				padding: 0% 0.3em;
 
 				font-size: 0.8em;

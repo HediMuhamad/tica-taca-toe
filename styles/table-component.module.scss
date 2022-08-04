@@ -1,6 +1,6 @@
 .tableContainer{
 	padding: 2em;
-	box-shadow: 0.3em 0.3em 0.5em 0.05em rgba($color: $my-secondary, $alpha: $low-opacity);
+	box-shadow: 0.3em 0.3em 0.5em 0.05em rgba($color: var(--my-secondary), $alpha: var(--low-opacity));
 
 	.tableComponent{
 		width: 100%;

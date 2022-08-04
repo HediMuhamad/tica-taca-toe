@@ -7,7 +7,7 @@
 				left: 0px;
 			}
 			.gameMode[modetype="singlePlayer"]{
-				background-color: white;
+				background-color: var(--my-primary);
 			}
 		}
 	}
@@ -15,19 +15,19 @@
 	&[playingmode="multi-player"]{
 		.GameModeContainer { 
 			.detectorCircle{
-				left: 54%;
+				left: 51%;
 			}
 			.gameMode[modetype="multiPlayer"]{
-				background-color: white;
+				background-color: var(--my-primary);
 			}
 		}
 	}
 
 	.GameModeContainer {
-		width: 90%;
+		width: 85%;
 		height: 100%;
 
-		border: 1px solid $my-secondary;
+		border: 1px solid var(--my-secondary);
 		border-radius: 100000px;
 		overflow: hidden;
 		position: relative;
@@ -48,8 +48,9 @@
 			mask-position: center !important;
 			mask-repeat: no-repeat !important;
 			mask-size: 60% !important;
-			background-color: $my-secondary;
-
+			background-color: var(--my-secondary);
+			z-index: 1;
+			
 			&[modetype="singlePlayer"] {
 				-webkit-mask-image: url("../public/imgs/single-user-icon.svg");
 				mask-image: url("../public/imgs/single-user-icon.svg");
@@ -63,12 +64,11 @@
 
 		.detectorCircle {
 			position: absolute;
-			background-color: $my-secondary;
+			background: var(--my-secondary);
 			height: 100%;
 			aspect-ratio: 1;
 			border-radius: 100%;
-			z-index: -1;
-
+			z-index: 0;
 		}
 
 	}

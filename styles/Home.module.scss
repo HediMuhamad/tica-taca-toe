@@ -1,20 +1,32 @@
-.light{
-  $my-primary:  #FCFCFF;
-  $my-secondary:#07090F;
-}
-
-.dark{
-  $my-primary:  #07090F;
-  $my-secondary:#FCFCFF;
-}
-
 .container{
+
   width: 100%;
   height: 100%;
 
   display: flex;
   justify-content: center;
   align-items: center;
+
+  background-color: var(--my-primary);
+
+
+
+  &[theme="light"]{
+    --my-primary:  #FCFCFF;
+    --my-secondary:#07090F;
+  }
+
+  &[theme="dark"]{
+    --my-primary:  #07090F;
+    --my-secondary: #FCFCFF;
+  }
+
+  --my-gray:	#707070;
+  --my-green:	#A6D3A0;
+  --my-blue: 	#6DB1BF;
+  --my-yellow: #D5A021;
+  --low-opacity: 0.2;
+
 }
 
 .main{

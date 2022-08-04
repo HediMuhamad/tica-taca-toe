@@ -15,7 +15,7 @@
 		}
 	
 		.border .valueContainer .value, .footer p {
-			color: $my-blue;
+			color: var(--my-blue);
 		}
 	}
 	
@@ -25,7 +25,7 @@
 		}
 	
 		.border .valueContainer .value, .footer p {
-			color: $my-green;
+			color: var(--my-green);
 		}
 	}
 	
@@ -40,7 +40,7 @@
 		}
 	
 		.border .valueContainer .value, .footer p {
-			color: $my-gray;
+			color: var(--my-gray);
 		}
 	}
 
@@ -56,7 +56,7 @@
 		background-size: 72.5%;
 		background-position: center;
 
-		background-color: white;
+		background-color: var(--my-primary);
 	}
 
 	.border{
@@ -68,7 +68,7 @@
 
 		height: 80%;
 		width: 100%;
-		border: 0.01em solid $my-secondary;
+		border: 0.01em solid var(--my-secondary);
 	
 		.valueContainer{
 			width: 100%;
@@ -103,7 +103,7 @@
 		position: absolute;
 		z-index: 2;
 		transform: translateY(45px);
-		background-color: $my-primary;
+		background-color: var(--my-primary);
 
 		p {
 			text-align: center;
