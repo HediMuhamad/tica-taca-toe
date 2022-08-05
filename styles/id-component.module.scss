@@ -1,27 +1,3 @@
-.idField[idtype="O"] {
-	color: var(--my-blue) !important;
-	.borderContainer > .idValueContainer > .idValue {
-		&::selection{
-			background-color: rgba($color: var(--my-blue), $alpha: var(--low-opacity));
-		}
-		&::-moz-selection{
-			background-color: rgba($color: var(--my-blue), $alpha: var(--low-opacity));
-		}
-	}
-}
-
-.idField[idtype="X"] {
-	color: var(--my-green) !important;
-	.borderContainer > .idValueContainer > .idValue {
-		&::selection{
-			background-color: rgba($color: var(--my-green), $alpha: var(--low-opacity));
-		}
-		&::-moz-selection{
-			background-color: rgba($color: var(--my-green), $alpha: var(--low-opacity));
-		}
-	}
-}
-
 .idField {
 
 	display: flex;
@@ -31,6 +7,35 @@
 	position: relative;
 
 	transition: 0.25s ease-in-out;
+
+	&[idtype="O"] {
+		color: var(--my-blue) !important;
+		.borderContainer > .idValueContainer > .idValue {
+			&::selection{
+				background-color: rgba($color: var(--my-blue), $alpha: var(--low-opacity));
+			}
+			&::-moz-selection{
+				background-color: rgba($color: var(--my-blue), $alpha: var(--low-opacity));
+			}
+		}
+	}
+	
+	&[idtype="X"] {
+		color: var(--my-green) !important;
+		.borderContainer > .idValueContainer > .idValue {
+			&::selection{
+				background-color: rgba($color: var(--my-green), $alpha: var(--low-opacity));
+			}
+			&::-moz-selection{
+				background-color: rgba($color: var(--my-green), $alpha: var(--low-opacity));
+			}
+		}
+	}
+
+	&[playingmode="singlePlayer"]{
+		opacity: 0.4;
+		pointer-events: none;
+	}
 
 	.hashSymbol {
 		display: flex;

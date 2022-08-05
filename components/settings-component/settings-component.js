@@ -7,7 +7,7 @@ import IdComponent from '../id-component/id-component';
 
 const SettingsComponent = () => {
 
-	const { props: {yourId, againstId}, actions: {setAgainstId} } = useContext(SettingsContext);
+	const { props: {yourId, againstId, playingMode}, actions: {setAgainstId} } = useContext(SettingsContext);
 	const { props: {markerType} } = useContext(AppContext);
 
 	const markerTypeCondition = markerType==="X";
@@ -32,7 +32,7 @@ const SettingsComponent = () => {
 		<div className={styles.settingsContainer}>
 			{
 				IdComponentsData.map((data, i)=>{
-					return <IdComponent name={data.name} value={data.value} setValue={data.setValue} markerType={data.markerType} key={i}/>
+					return <IdComponent name={data.name} value={data.value} setValue={data.setValue} markerType={data.markerType} playingMode={playingMode} key={i}/>
 				})
 			}
 			<GameModeComponent/>

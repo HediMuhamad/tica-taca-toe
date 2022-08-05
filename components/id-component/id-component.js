@@ -2,7 +2,7 @@ import styles from '../../styles/id-component.module.scss'
 
 const IdComponent = (props) => {
 
-	const { name, value, setValue, markerType } = props;
+	const { name, value, setValue, markerType, playingMode } = props;
 
 	const valueHandler = (event) => {
 		let value = event.target.value;
@@ -15,11 +15,11 @@ const IdComponent = (props) => {
 		}
 		!isValueContainsLetter ? setValue(value) : null;
 	}
-
 	
+	console.log(playingMode);
 
 	return(
-		<div className={styles.idField} idtype={markerType}>
+		<div className={styles.idField} idtype={markerType} playingmode={playingMode}>
 			<div className={styles.hashSymbol}>#</div>
 			<div className={styles.borderContainer}>
 				<div className={styles.idValueContainer}>
