@@ -2,16 +2,23 @@
   "name": "tica-taca-toe",
   "version": "0.1.0",
   "private": true,
+  "module": "ES6",
+  "type": "module",
   "scripts": {
-    "dev": "next dev",
+    "dev": "nodemon server.js",
     "build": "next build",
-    "start": "next start",
+    "start": "NODE_ENV=production node server.js",
     "lint": "next lint"
   },
   "dependencies": {
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
     "next": "12.2.2",
+    "nodemon": "^2.0.19",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "socket.io": "^4.5.1",
+    "socket.io-client": "^4.5.1"
   },
   "devDependencies": {
     "eslint": "8.19.0",

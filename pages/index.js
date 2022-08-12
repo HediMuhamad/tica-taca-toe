@@ -6,13 +6,33 @@ import SettingsComponent from '../components/settings-component/settings-compone
 import ThemeControllerComponent from '../components/theme-controller-component/theme-controller-component'
 import { useContext } from 'react'
 import { AppContext } from '../context/appContext'
+import { SettingsContext } from '../context/settingsContext'
+import { SocketContext } from '../context/socketContext'
+import { ACTIONS } from "../utils/enums"
 
 export default function Home() {
 
   const theme = useContext(AppContext).props.theme;
 
+  const { actions: { setYourId } } = useContext(SettingsContext);
+  const socket = useContext(SocketContext);
+
+  socket.on(ACTIONS.CONNECTION_RESPONSE, ({userId})=>{
+      setYourId(userId)
+  })
+
+  socket.on(ACTIONS.NEW_ROOM_BROADCAST, (res)=>{
+    console.log(res);
+  })
+
+
+  socket.on(ACTIONS.NEW_ROOM_RESPONSE, (res)=>{
+    console.log(res);
+  })
+
+  
   return (
-    <div className={styles.container} theme={theme} >
+    <div className={styles.container} theme={theme}>
       <Head>
         <title>Tica-Taca-Toe</title>
         <meta name="description" content="Multi-Player and Signle-Player Tic-Tac-Toe Game."/>

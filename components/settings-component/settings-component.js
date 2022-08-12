@@ -10,7 +10,7 @@ const SettingsComponent = () => {
 	const { props: {yourId, againstId, playingMode}, actions: {setAgainstId} } = useContext(SettingsContext);
 	const { props: {markerType} } = useContext(AppContext);
 
-	const markerTypeCondition = markerType==="X";
+	const markerTypeCondition = markerType === "X";
 
 	let IdComponentsData = [
 		{
