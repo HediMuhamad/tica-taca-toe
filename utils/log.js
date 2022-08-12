@@ -3,7 +3,7 @@ async function log(loggerName, action, msg){
 	msg = {loggerName: loggerName, action: action, ...msg};
 	
 	try{
-		await fetch("http://localhost:8000/",{
+		await fetch(process.env.LOGGER_URL,{
 			method: "POST",
 			body: JSON.stringify(msg),
 			headers: {
