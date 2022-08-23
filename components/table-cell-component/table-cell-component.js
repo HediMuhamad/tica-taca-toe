@@ -3,6 +3,7 @@ import styles from "../../styles/table-cell-component.module.scss"
 import { AppContext } from "../../context/appContext";
 import { TableContext } from "../../context/tableContext";
 import { SocketContext } from "../../context/socketContext";
+import { ACTIONS } from "../../utils/enums";
 
 const TableCell = ({id, ...props}) => {
 	const { markerType } = useContext(AppContext).props;
@@ -12,9 +13,7 @@ const TableCell = ({id, ...props}) => {
 	let [markerTypeAttribute, setMarkerTypeAttribute] = useState(null);
 
 	const clickHandler = useCallback(() => {
-	addTableCell(id, markerType);
-		setMarkerTypeAttribute(markerType);
-		socket.emit("newMove", {id: id})
+	socket.emit(ACTIONS.NEW_MOVE_REQUEST, {index: id})
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [markerType])
 

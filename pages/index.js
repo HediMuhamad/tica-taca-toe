@@ -9,13 +9,15 @@ import { AppContext } from '../context/appContext'
 import { SettingsContext } from '../context/settingsContext'
 import { SocketContext } from '../context/socketContext'
 import { ACTIONS } from "../utils/enums"
+import { TableContext } from '../context/tableContext'
 
 export default function Home() {
 
 	const theme = useContext(AppContext).props.theme;
 
-	const { actions: { setYourId, setAgainstId }, props: { yourId } } = useContext(SettingsContext);
+	const { actions: { setYourId, setAgainstId }, } = useContext(SettingsContext);
 	const { actions: { switchMarkerType }, props: { markerType } } = useContext(AppContext);
+	const { actions: { addTableCell } } = useContext(TableContext);
 	const socket = useContext(SocketContext);
 
 	const connectionResponseHandler = useCallback((userId)=>{
@@ -31,12 +33,20 @@ export default function Home() {
 		})
 	}, [markerType, setAgainstId, switchMarkerType]);
 
+	const newMoveBroadcastHandler = useCallback((res)=>{
+		const { index, markerType } = res;
+		addTableCell(index, markerType);
+	}, []);
+
 	socket.on(ACTIONS.CONNECTION_RESPONSE, ({ userId }) => {
 		connectionResponseHandler(userId);
 
 		socket.off(ACTIONS.NEW_ROOM_BROADCAST);
 		socket.on(ACTIONS.NEW_ROOM_BROADCAST, (response) => {
 			newRoomBroadcastHandler(response, userId)
+
+			socket.off(ACTIONS.NEW_MOVE_BROADCAST)
+			socket.on(ACTIONS.NEW_MOVE_BROADCAST, newMoveBroadcastHandler);
 		});
 		
 		socket.off(ACTIONS.NEW_ROOM_RESPONSE);

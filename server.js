@@ -43,8 +43,11 @@ function getRandomId(){
 //User Functions
 function createNewUser(socket){
 	
+	const userId = getRandomId();
+	socket.userId = userId;
+
 	const user = {
-		userId: getRandomId(),
+		userId: userId,
 		id: socket.id,
 		markerType: undefined,
 		isIdle: true,
@@ -108,7 +111,7 @@ function createNewRoom(xGamer, oGamer){
 }
 
 function getRoomIndex(gamerId){
-	const foundGameIndex = rooms.findIndex((room)=>(room.xRole.userId===gamerId || room.oRole.userId===gamerId));
+	const foundGameIndex = rooms.findIndex((room)=>(room.xRole.userId==gamerId || room.oRole.userId==gamerId));
 	return foundGameIndex;
 }
 
@@ -252,10 +255,25 @@ io.on(ACTIONS.CONNECTION, (socket)=>{
 		
 	})
 
-	socket.on(ACTIONS.LEAVE_ROOM_REQUEST, ()=>{
-		deleteExistRoom(user.userId)
-		log("SERVER", LOG.LEAVE_ROOM_REQUEST, {userId: user.userId, roomId: getRoom(getRoomIndex(user.userId)).roomId});
-	})
+	socket.on(ACTIONS.NEW_MOVE_REQUEST, (req)=>{
+		log("SERVER", LOG.NEW_MOVE_REQUEST, {user: socket.userId, ...req});
+		const index = req.index;
+		const room = getRoom(getRoomIndex(socket.userId))
+		if(room && !room.tableCells[index]){
+			const markerType = room.xRole.userId==socket.userId ? "X" : "O";
+			room.tableCells[index]=markerType;
+			
+			const res = {index, markerType};
+			io.in(room.roomId).emit(ACTIONS.NEW_MOVE_BROADCAST, res);
+			log("SERVER", LOG.NEW_MOVE_BROADCAST, {user: socket.userId, ...res})
+		}
+
+		socket.on(ACTIONS.LEAVE_ROOM_REQUEST, ()=>{
+			deleteExistRoom(user.userId)
+			log("SERVER", LOG.LEAVE_ROOM_REQUEST, {userId: user.userId, roomId: getRoom(getRoomIndex(user.userId)).roomId});
+		})
+
+	} )
 
 	socket.on(ACTIONS.DISCONNECTION, ()=>{
 		deleteExistRoom(user.userId);
