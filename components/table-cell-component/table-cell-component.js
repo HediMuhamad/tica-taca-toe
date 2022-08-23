@@ -12,11 +12,11 @@ const TableCell = ({id, ...props}) => {
 	let [markerTypeAttribute, setMarkerTypeAttribute] = useState(null);
 
 	const clickHandler = useCallback(() => {
-		addTableCell(id, markerType);
+	addTableCell(id, markerType);
 		setMarkerTypeAttribute(markerType);
 		socket.emit("newMove", {id: id})
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+	}, [markerType])
 
 	
 	useEffect(()=>{

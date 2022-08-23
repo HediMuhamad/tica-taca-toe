@@ -12,7 +12,6 @@ const tableCellReducer = (state, action) => {
 }
 
 const TableContextProvider = ({children}) => {
-	// const [tableCells, setTableCells] = useState(DEFAULT_TABLE_PROPS.props.tableCells);
 	const [tableCells, tableCellDispatcher] = useReducer(tableCellReducer, DEFAULT_TABLE_PROPS.props.tableCells)
 
 	const addTableCell = useCallback((cellIndex, markerType) => {
