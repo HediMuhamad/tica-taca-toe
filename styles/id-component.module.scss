@@ -17,6 +17,14 @@
 			&::-moz-selection{
 				background-color: rgba($color: var(--my-blue), $alpha: var(--low-opacity));
 			}
+			&::-webkit-input-placeholder{
+				color: var(--my-blue) !important;
+				opacity: 0.5;
+			}
+			&::-moz-placeholder{
+				color: var(--my-blue) !important;
+				opacity: 0.5;
+			}
 		}
 	}
 	
@@ -28,6 +36,14 @@
 			}
 			&::-moz-selection{
 				background-color: rgba($color: var(--my-green), $alpha: var(--low-opacity));
+			}
+			&::-webkit-input-placeholder{
+				color: var(--my-green) !important;
+				opacity: 0.5;
+			}
+			&::-moz-placeholder{
+				color: var(--my-green) !important;
+				opacity: 0.5;
 			}
 		}
 	}
