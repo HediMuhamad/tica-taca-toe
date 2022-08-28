@@ -103,8 +103,8 @@ function createNewRoom(xGamer, oGamer){
 
 	const room = {
 		roomId: roomId,
-		xRoleId: xGamer.userId,
-		oRoleId: oGamer.userId,
+		xRole: xGamer,
+		oRole: oGamer,
 		tableCells: new Array(9),
 		xWins: 0,
 		oWins: 0,
@@ -124,15 +124,13 @@ function deleteExistRoom(roomId){
 		return;
 	}
 
-	const {xRoleId, oRoleId} = room;
+	const {xRole, oRole} = room;
 
-	const xRole = users[xRoleId];
 	xRole.socket.leave(roomId);
 	xRole.markerType = undefined;
 	xRole.isIdle = true;
 	xRole.roomId = null
 
-	const oRole = users[oRoleId];
 	oRole.socket.leave(roomId);
 	oRole.markerType = undefined;
 	oRole.isIdle = true;
@@ -140,7 +138,7 @@ function deleteExistRoom(roomId){
 	
 	delete rooms[roomId];
 
-	log("SERVER", LOG.ROOM_DELETION, {xRoleId, oRoleId, roomId});
+	log("SERVER", LOG.ROOM_DELETION, {xRole: xRole.userId, oRole: oRole.userId, roomId});
 }
 
 
@@ -267,7 +265,7 @@ io.on(ACTIONS.CONNECTION, (socket)=>{
 		const index = req.index;
 		const room = rooms[user.roomId];
 		if(room && !room.tableCells[index]){
-			const markerType = room.xRoleId==socket.userId ? "X" : "O";
+			const markerType = room.xRole.userId==socket.userId ? "X" : "O";
 			room.tableCells[index]=markerType;
 			
 			const res = {index, markerType};
