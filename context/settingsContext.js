@@ -12,11 +12,7 @@ const SettingsContextProvider = ({children}) => {
 	const [playingMode, setPlayingMode] = useState(DEFAULT_SETTINGS_PROPS.props.playingMode);
 
 	const switchPlayingMode = useCallback(() => {
-		if(playingMode==="singlePlayer"){
-			setPlayingMode("multiPlayer")
-		}else{
-			setPlayingMode("singlePlayer")
-		}
+		playingMode==="singlePlayer" ? setPlayingMode("multiPlayer") : setPlayingMode("singlePlayer");
 	}, [playingMode])
 
 	const setPersisted = useCallback(({yourId, againstId, playingMode})=>{

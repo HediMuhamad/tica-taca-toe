@@ -4,11 +4,11 @@ import TableComponent from '../components/table-component/table-component'
 import PropertiesComponent from '../components/properties-component/properties-component'
 import SettingsComponent from '../components/settings-component/settings-component'
 import ThemeControllerComponent from '../components/theme-controller-component/theme-controller-component'
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useContext } from 'react'
 import { AppContext } from '../context/appContext'
 import { SettingsContext } from '../context/settingsContext'
 import { SocketContext } from '../context/socketContext'
-import { ACTIONS } from "../utils/enums"
+import { ACTIONS, LOG } from "../utils/enums"
 import { TableContext } from '../context/tableContext'
 
 export default function Home() {
@@ -17,6 +17,7 @@ export default function Home() {
 
 	const { actions: { setYourId, setAgainstId }, } = useContext(SettingsContext);
 	const { actions: { switchMarkerType }, props: { markerType } } = useContext(AppContext);
+	const { actions: { switchPlayingMode }, props: {playingMode} } = useContext(SettingsContext);
 	const { actions: { addTableCell } } = useContext(TableContext);
 	const socket = useContext(SocketContext);
 
@@ -31,12 +32,16 @@ export default function Home() {
 				setAgainstId(key)
 			}
 		})
-	}, [markerType, setAgainstId, switchMarkerType]);
+	}, [markerType]);
 
 	const newMoveBroadcastHandler = useCallback((res)=>{
 		const { index, markerType } = res;
 		addTableCell(index, markerType);
 	}, []);
+
+	const leaveRoomBroadcastHandler = useCallback(()=>{
+		console.log(LOG.LEAVE_ROOM_BROADCAST);
+	}, [])
 
 	socket.off(ACTIONS.CONNECTION_RESPONSE)
 	socket.on(ACTIONS.CONNECTION_RESPONSE, ({ userId }) => {
@@ -48,6 +53,10 @@ export default function Home() {
 
 			socket.off(ACTIONS.NEW_MOVE_BROADCAST);
 			socket.on(ACTIONS.NEW_MOVE_BROADCAST, newMoveBroadcastHandler);
+			
+			socket.off(ACTIONS.LEAVE_ROOM_BROADCAST)
+			socket.on(ACTIONS.LEAVE_ROOM_BROADCAST, leaveRoomBroadcastHandler)
+		
 		});
 		
 		socket.off(ACTIONS.NEW_ROOM_RESPONSE);
@@ -57,7 +66,16 @@ export default function Home() {
 
 	})
 
+	socket.off(ACTIONS.DISCONNECTION);
+	socket.on(ACTIONS.DISCONNECTION, ()=>{
+		leaveRoomBroadcastHandler();
+		if(playingMode==="multiPlayer"){
+			switchPlayingMode();
+		}
+	})
 
+
+	
 	return (
 		<div className={styles.container} theme={theme}>
 			<Head>

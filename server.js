@@ -259,6 +259,12 @@ io.on(ACTIONS.CONNECTION, (socket)=>{
 		}
 
 	})
+		
+	socket.on(ACTIONS.LEAVE_ROOM_REQUEST, ()=>{
+		log("SERVER", LOG.LEAVE_ROOM_REQUEST, {userId: user.userId, roomId: user.roomId});
+		io.in(user.roomId).emit(ACTIONS.LEAVE_ROOM_BROADCAST);
+		deleteExistRoom(user.roomId)
+	})
 
 	socket.on(ACTIONS.NEW_MOVE_REQUEST, (req)=>{
 		log("SERVER", LOG.NEW_MOVE_REQUEST, {user: socket.userId, ...req});
@@ -275,6 +281,10 @@ io.on(ACTIONS.CONNECTION, (socket)=>{
 	} )
 
 	socket.on(ACTIONS.DISCONNECTION, ()=>{
+
+		io.in(user.roomId).emit(ACTIONS.LEAVE_ROOM_BROADCAST);
+		log("SERVER", LOG.LEAVE_ROOM_BROADCAST, rooms[user.roomId]);
+
 		deleteExistRoom(user.roomId);
 		deleteExistUser(userId);
 		log("SERVER", LOG.DISCONNECTION, {id: userId});
