@@ -27,15 +27,15 @@ const handle = nextApp.getRequestHandler();
 
 const limit = 99999;
 
-const users = [];
-const rooms = [];
+const users = {};
+const rooms = {};
 
 //Utils
 function getRandomId(){
 	let currentId;
 	do{
 		currentId = Math.random()*limit;
-	}while(users.includes(currentId));
+	}while(Object.keys(users).includes(currentId));
 	return parseInt(currentId);
 }
 
@@ -51,34 +51,37 @@ function createNewUser(socket){
 		id: socket.id,
 		markerType: undefined,
 		isIdle: true,
+		roomId: null,
 		socket: socket,
 	}
 	
-	users.push(user);
+	users[userId] = user;
 
 	log("SERVER", LOG.USER_CREATION, {id: socket.id});
 	
 	return user;
 }
 
-function getUserIndex(userId){
-	return users.findIndex((user)=>user.userId===userId)
-}
-
-function getUser(index){
-	index===-1 ? null : users[userIndex];
-}
-
-function getIdleUser(expectUserId){
-	let idleUser = users.find((user)=>(user.userId!==expectUserId && user.isIdle===true));
+function getIdleUser(exceptUserId){
+	let idleUser = null;
+	for (let k of Object.keys(users)){
+		if( k!=exceptUserId && users[k].isIdle===true){
+			idleUser = users[k];
+			break;
+		}
+	}
 	return idleUser;
 }
 
 function deleteExistUser(userId){
-	const user = getUserIndex(userId);
-	users.splice(user, 1);
+	if(!users[userId]){
+		log("SERVER", LOG.FAILED_USER_DELETION, {userId});
+		return false;
+	}
 
+	delete users[userId];
 	log("SERVER", LOG.USER_DELETION, {userId});
+	return true;
 }
 
 
@@ -92,46 +95,52 @@ function createNewRoom(xGamer, oGamer){
 	xGamer.socket.join(roomId);
 	oGamer.socket.join(roomId);
 
+	xGamer.roomId = roomId;
+	oGamer.roomId = roomId;
+
 	xGamer.isIdle = false;
 	oGamer.isIdle = false;
 
 	const room = {
 		roomId: roomId,
-		xRole: xGamer,
-		oRole: oGamer,
+		xRoleId: xGamer.userId,
+		oRoleId: oGamer.userId,
 		tableCells: new Array(9),
 		xWins: 0,
 		oWins: 0,
 		draws: 0,
 	}
 
-	rooms.push(room);
+	rooms[roomId] = room
 
 	return room;
 }
 
-function getRoomIndex(gamerId){
-	const foundGameIndex = rooms.findIndex((room)=>(room.xRole.userId==gamerId || room.oRole.userId==gamerId));
-	return foundGameIndex;
-}
+function deleteExistRoom(roomId){
 
-function getRoom(index){
-	return index===-1 ? null : rooms[index];
-}
+	const room = rooms[roomId];
 
-function deleteExistRoom(gamerId){
-	const roomIndex = getRoomIndex(gamerId);
-	if(roomIndex===-1){
+	if(!room){
 		return;
 	}
-	const {xRole, oRole, roomId} = getRoom(roomIndex);
+
+	const {xRoleId, oRoleId} = room;
+
+	const xRole = users[xRoleId];
 	xRole.socket.leave(roomId);
 	xRole.markerType = undefined;
+	xRole.isIdle = true;
+	xRole.roomId = null
+
+	const oRole = users[oRoleId];
 	oRole.socket.leave(roomId);
 	oRole.markerType = undefined;
-	rooms.splice(roomIndex);
+	oRole.isIdle = true;
+	oRole.roomId = null
+	
+	delete rooms[roomId];
 
-	log("SERVER", LOG.ROOM_DELETION, {xRole: xRole.userId, oRole: oRole.userId, roomId});
+	log("SERVER", LOG.ROOM_DELETION, {xRoleId, oRoleId, roomId});
 }
 
 
@@ -142,18 +151,16 @@ function playWithFriend(friendId, user){
 
 	const response = {};
 
-	if(user.userId===friendId){
+	if(user.userId==friendId){
 		response.errorCode = "#Vu1UVB"
 		log("SERVER", LOG.FAILED_PLAY_WITH_FRIEND_REQUEST,
 			{errCode: response.errorCode, errMsg: `#${friendId} is the same as user user-id.`});
 		return response
 	}
 
-	const hostileIndex = getUserIndex(friendId);
-	const hostileUser = getUser(hostileIndex);
+	const hostileUser = users[friendId];
 
-	
-	if(hostileIndex===-1){
+	if(!hostileUser){
 		response.errorCode = "#OEJLG3";
 		log("SERVER", LOG.FAILED_PLAY_WITH_FRIEND_REQUEST,
 			{errCode: response.errorCode, errMsg: `#${friendId} isn't online.`});
@@ -165,16 +172,16 @@ function playWithFriend(friendId, user){
 	}else{
 		
 		Math.random()>=0.5 ? 
-			(hostileUser.markerType="O", user.markerType="X") :
-			(hostileUser.markerType="X", user.markerType="O") ;
+			(hostileUser.markerType="O", user.markerType="X"):
+			(hostileUser.markerType="X", user.markerType="O");
 
 		const { roomId } = hostileUser.markerType==="X" ? createNewRoom(hostileUser, user) : createNewRoom(user, hostileUser);
-		
+
 		response.processCode = "#Czw1rU";
 		response.roomId = roomId;
 		response.users = {
 			[user.userId] : user.markerType,
-			[hostileUser.userId] : hostileUser.markerType
+			[friendId] : hostileUser.markerType
 		}
 		
 		log("SERVER", LOG.SUCCEEDED_PLAY_WITH_FRIEND_REQUEST,
@@ -234,7 +241,7 @@ io.on(ACTIONS.CONNECTION, (socket)=>{
 	socket.emit(ACTIONS.CONNECTION_RESPONSE, {userId})
 	log("SERVER", LOG.CONNECTION_RESPONSE, {userId})
 
-	socket.on(ACTIONS.NEW_ROOM_REQUEST, async (req)=>{
+	socket.on(ACTIONS.NEW_ROOM_REQUEST, (req)=>{
 		
 		const doesWantToPlayWithFriend = !!req && !!req.friendId;
 		const friendId = doesWantToPlayWithFriend ? req.friendId : null
@@ -248,37 +255,31 @@ io.on(ACTIONS.CONNECTION, (socket)=>{
 		
 		if(!succeeded){
 			socket.emit(ACTIONS.NEW_ROOM_RESPONSE, response);
-			log("SERVER", LOG.NEW_ROOM_RESPONSE, response)
-		}else{;
+			log("SERVER", LOG.NEW_ROOM_RESPONSE, response);
+		}else{
 			io.in(response.roomId).emit(ACTIONS.NEW_ROOM_BROADCAST, response);
 		}
-		
+
 	})
 
 	socket.on(ACTIONS.NEW_MOVE_REQUEST, (req)=>{
 		log("SERVER", LOG.NEW_MOVE_REQUEST, {user: socket.userId, ...req});
 		const index = req.index;
-		const room = getRoom(getRoomIndex(socket.userId))
+		const room = rooms[user.roomId];
 		if(room && !room.tableCells[index]){
-			const markerType = room.xRole.userId==socket.userId ? "X" : "O";
+			const markerType = room.xRoleId==socket.userId ? "X" : "O";
 			room.tableCells[index]=markerType;
 			
 			const res = {index, markerType};
-			io.in(room.roomId).emit(ACTIONS.NEW_MOVE_BROADCAST, res);
+			io.in(user.roomId).emit(ACTIONS.NEW_MOVE_BROADCAST, res);
 			log("SERVER", LOG.NEW_MOVE_BROADCAST, {user: socket.userId, ...res})
 		}
-
-		socket.on(ACTIONS.LEAVE_ROOM_REQUEST, ()=>{
-			deleteExistRoom(user.userId)
-			log("SERVER", LOG.LEAVE_ROOM_REQUEST, {userId: user.userId, roomId: getRoom(getRoomIndex(user.userId)).roomId});
-		})
-
 	} )
 
 	socket.on(ACTIONS.DISCONNECTION, ()=>{
-		deleteExistRoom(user.userId);
-		deleteExistUser(user.userId);
-		log("SERVER", LOG.DISCONNECTION, {id: user.userId})
+		deleteExistRoom(user.roomId);
+		deleteExistUser(userId);
+		log("SERVER", LOG.DISCONNECTION, {id: userId});
 	})
 
 })
@@ -289,6 +290,9 @@ nextApp.prepare().then(()=>{
 		handle(req, res);
 	})
 
-	server.listen(PORT);
+	server.listen(PORT, ()=>{
+		log(null, null, {reset: true});
+		log("SERVER", LOG.SERVER_STARTED, {port: PORT})
+	});
 
 })

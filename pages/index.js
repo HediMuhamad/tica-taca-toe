@@ -24,7 +24,7 @@ export default function Home() {
 		setYourId(userId);
 	}, [])
 
-	const newRoomBroadcastHandler = useCallback(({roomId, users}, userId)=>{
+	const newRoomBroadcastHandler = useCallback(({users}, userId)=>{
 		markerType != users[userId] ? switchMarkerType() : null;
 		Object.keys(users).forEach(key=>{
 			if(key!=userId){
@@ -38,14 +38,15 @@ export default function Home() {
 		addTableCell(index, markerType);
 	}, []);
 
+	socket.off(ACTIONS.CONNECTION_RESPONSE)
 	socket.on(ACTIONS.CONNECTION_RESPONSE, ({ userId }) => {
 		connectionResponseHandler(userId);
 
 		socket.off(ACTIONS.NEW_ROOM_BROADCAST);
-		socket.on(ACTIONS.NEW_ROOM_BROADCAST, (response) => {
-			newRoomBroadcastHandler(response, userId)
+		socket.on(ACTIONS.NEW_ROOM_BROADCAST, (res) => {
+			newRoomBroadcastHandler(res, userId);
 
-			socket.off(ACTIONS.NEW_MOVE_BROADCAST)
+			socket.off(ACTIONS.NEW_MOVE_BROADCAST);
 			socket.on(ACTIONS.NEW_MOVE_BROADCAST, newMoveBroadcastHandler);
 		});
 		
@@ -69,7 +70,6 @@ export default function Home() {
 				<TableComponent />
 				<PropertiesComponent />
 				<SettingsComponent />
-				{/* <div onClick={()=>{setId(++id)}} style={{width:"100%", height:"100%", backgroundColor:"red" }} ></div> */}
 				<ThemeControllerComponent />
 			</main>
 		</div>
