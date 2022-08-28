@@ -48,8 +48,8 @@
 		}
 	}
 
-	&[playingmode="singlePlayer"]{
-		opacity: 0.4;
+	&[is-disabled="true"]{
+		opacity: 0.65;
 		pointer-events: none;
 	}
 
