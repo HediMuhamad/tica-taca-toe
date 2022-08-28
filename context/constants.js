@@ -18,6 +18,7 @@ export const DEFAULT_TABLE_PROPS = {
 	},
 	actions: {
 		addTableCell: undefined,
+		emptyTableCells: undefined,
 		setPersisted: undefined
 	}
 }

@@ -18,6 +18,7 @@ export default function Home() {
 	const { actions: { setYourId, setAgainstId }, } = useContext(SettingsContext);
 	const { actions: { switchMarkerType, setIsIdle }, props: { markerType } } = useContext(AppContext);
 	const { actions: { switchPlayingMode }, props: {playingMode} } = useContext(SettingsContext);
+	const { actions: { emptyTableCells } } = useContext(TableContext);
 	const { actions: { addTableCell } } = useContext(TableContext);
 	const socket = useContext(SocketContext);
 
@@ -42,6 +43,7 @@ export default function Home() {
 
 	const leaveRoomBroadcastHandler = useCallback(()=>{
 		setIsIdle(true);
+		emptyTableCells();
 	}, [])
 
 	socket.off(ACTIONS.CONNECTION_RESPONSE)
@@ -75,7 +77,7 @@ export default function Home() {
 		}
 	})
 
-
+	
 
 	return (
 		<div className={styles.container} theme={theme}>

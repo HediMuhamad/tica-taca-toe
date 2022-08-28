@@ -7,6 +7,10 @@ TableContext.displayName="table_state";
 export {TableContext};
 
 const tableCellReducer = (state, action) => {
+	if(action.reset){
+		return [...new Array(9)];
+	}
+
 	state[action.cellIndex] = action.markerType;
 	return [...state];
 }
@@ -18,6 +22,10 @@ const TableContextProvider = ({children}) => {
 		tableCellDispatcher({cellIndex: cellIndex, markerType: markerType});
 	},[])
 
+	const emptyTableCells = useCallback(()=>{
+		tableCellDispatcher({reset: true});
+	},[])
+
 	const setPersisted = useCallback(({tableCells})=>{
 		tableCells.forEach((_, id) => {
 			tableCellDispatcher({cellIndex: id, markerType: tableCells[id]})
@@ -25,7 +33,7 @@ const TableContextProvider = ({children}) => {
 	}, [])
 
 	return(
-		<TableContext.Provider value={{props: { tableCells }, actions: { addTableCell, setPersisted }}}>
+		<TableContext.Provider value={{props: { tableCells }, actions: { addTableCell, emptyTableCells, setPersisted }}}>
 			{children}
 		</TableContext.Provider>
 	)
