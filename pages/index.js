@@ -8,7 +8,7 @@ import { useCallback, useContext } from 'react'
 import { AppContext } from '../context/appContext'
 import { SettingsContext } from '../context/settingsContext'
 import { SocketContext } from '../context/socketContext'
-import { ACTIONS, LOG } from "../utils/enums"
+import { ACTIONS } from "../utils/enums"
 import { TableContext } from '../context/tableContext'
 
 export default function Home() {
@@ -16,7 +16,7 @@ export default function Home() {
 	const theme = useContext(AppContext).props.theme;
 
 	const { actions: { setYourId, setAgainstId }, } = useContext(SettingsContext);
-	const { actions: { switchMarkerType }, props: { markerType } } = useContext(AppContext);
+	const { actions: { switchMarkerType, setIsIdle }, props: { markerType } } = useContext(AppContext);
 	const { actions: { switchPlayingMode }, props: {playingMode} } = useContext(SettingsContext);
 	const { actions: { addTableCell } } = useContext(TableContext);
 	const socket = useContext(SocketContext);
@@ -32,6 +32,7 @@ export default function Home() {
 				setAgainstId(key)
 			}
 		})
+		setIsIdle(false);
 	}, [markerType]);
 
 	const newMoveBroadcastHandler = useCallback((res)=>{
@@ -40,7 +41,7 @@ export default function Home() {
 	}, []);
 
 	const leaveRoomBroadcastHandler = useCallback(()=>{
-		console.log(LOG.LEAVE_ROOM_BROADCAST);
+		setIsIdle(true);
 	}, [])
 
 	socket.off(ACTIONS.CONNECTION_RESPONSE)
@@ -75,7 +76,7 @@ export default function Home() {
 	})
 
 
-	
+
 	return (
 		<div className={styles.container} theme={theme}>
 			<Head>

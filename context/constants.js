@@ -2,10 +2,12 @@ export const DEFAULT_APP_PROPS = {
 	props: {
 		theme: "light",
 		markerType: "O",
+		isIdle: true,
 	},
 	actions: {
 		switchTheme: undefined,
 		switchMarkerType: undefined,
+		setIsIdle: undefined,
 		setPersisted: undefined
 	}
 }

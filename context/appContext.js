@@ -1,4 +1,4 @@
-import { createContext, useCallback, useEffect, useState } from "react";
+import { createContext, useCallback, useState } from "react";
 
 import { DEFAULT_APP_PROPS } from "./constants"
 
@@ -9,6 +9,7 @@ export {AppContext};
 const AppContextProvider = ({children}) => {
 	const [theme, setTheme] = useState(DEFAULT_APP_PROPS.props.theme);
 	const [markerType, setMarkerType] = useState(DEFAULT_APP_PROPS.props.markerType);
+	const [isIdle, setIsIdle] = useState(DEFAULT_APP_PROPS.props.isIdle);
 
  	const switchTheme = useCallback(() => {
 		if(theme==="light"){
@@ -18,19 +19,13 @@ const AppContextProvider = ({children}) => {
 		}
 	}, [theme])
 
-	const switchMarkerType = useCallback((markTypeArg) => {
-		if(markTypeArg) {
-			setMarkerType(markTypeArg)
-			return;
-		}
-		
+	const switchMarkerType = useCallback(() => {
 		if(markerType==="O"){
 			setMarkerType("X")
 		}else{
 			setMarkerType("O")
 		}
 	}, [markerType])
-
 	
 	const setPersisted = useCallback(({theme, markerType}) => {
 		setTheme(theme);
@@ -38,7 +33,7 @@ const AppContextProvider = ({children}) => {
 	},[])
 
 	return(
-		<AppContext.Provider value={{props: { theme, markerType }, actions: { switchTheme, switchMarkerType, setPersisted }}}>
+		<AppContext.Provider value={{props: { theme, markerType, isIdle }, actions: { switchTheme, switchMarkerType, setIsIdle, setPersisted }}}>
 			{children}
 		</AppContext.Provider>
 	)
