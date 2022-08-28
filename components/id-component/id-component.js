@@ -23,7 +23,7 @@ const IdComponent = (props) => {
 
 	const onKeyDownCaptureHandler = (event) => {
 		if(event.keyCode===13){
-			socket.emit(ACTIONS.NEW_ROOM_REQUEST);
+			socket.emit(ACTIONS.NEW_ROOM_REQUEST, {friendId: value});
 		}
 	}
 
