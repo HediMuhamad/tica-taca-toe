@@ -146,6 +146,7 @@ function createNewRoom(xGamer, oGamer){
 		xWins: 0,
 		oWins: 0,
 		draws: 0,
+		whoIsNext: "X",
 	}
 
 	rooms[roomId] = room
@@ -309,10 +310,14 @@ io.on(ACTIONS.CONNECTION, (socket)=>{
 		const room = rooms[user.roomId];
 		if(index+1 && room && !room.tableCells[index]){
 			const markerType = room.xRole.userId==socket.userId ? "X" : "O";
+			if(markerType!==room.whoIsNext){
+				return;
+			}
 			room.tableCells[index]=markerType;
 			
 			const newMoveBroadcastResponse = {index, markerType};
 			io.in(user.roomId).emit(ACTIONS.NEW_MOVE_BROADCAST, newMoveBroadcastResponse);
+			room.whoIsNext = room.whoIsNext==="X" ? "O" : "X";
 			log("SERVER", LOG.NEW_MOVE_BROADCAST, {user: socket.userId, ...newMoveBroadcastResponse})
 			
 			const finishResult = checkForFinishing(room.tableCells);
