@@ -316,22 +316,25 @@ io.on(ACTIONS.CONNECTION, (socket)=>{
 			log("SERVER", LOG.NEW_MOVE_BROADCAST, {user: socket.userId, ...newMoveBroadcastResponse})
 			
 			const finishResult = checkForFinishing(room.tableCells);
-			if(finishResult && finishResult.winner){
-				const res = {cells: finishResult.cells};
-				if(markerType==="X"){
-					room.xWins+=1;
-					res.xWins=room.xWins;
-				}else{
-					room.oWins+=1;
-					res.oWins=room.oWins;
+			if(finishResult){
+				if(finishResult.winner){
+					const res = {cells: finishResult.cells};
+					if(markerType==="X"){
+						room.xWins+=1;
+						res.xWins=room.xWins;
+					}else{
+						room.oWins+=1;
+						res.oWins=room.oWins;
+					}
+					io.in(user.roomId).emit(ACTIONS.SINGLE_WIN_BROADCAST, res);
+					log("SERVER", LOG.SINGLE_WIN_BROADCAST, res)
+				}else if(finishResult.drew){
+					room.draws+=1;
+					const res = { draws:room.draws } 
+					io.in(user.roomId).emit(ACTIONS.SINGLE_DRAW_BROADCAST, res);
+					log("SERVER", LOG.SINGLE_DRAW_BROADCAST, res);
 				}
-				io.in(user.roomId).emit(ACTIONS.SINGLE_WIN_BROADCAST, res);
-				log("SERVER", LOG.SINGLE_WIN_BROADCAST, res)
-			}else if(finishResult && finishResult.drew){
-				room.draws+=1;
-				const res = { draws:room.draws } 
-				io.in(user.roomId).emit(ACTIONS.SINGLE_DRAW_BROADCAST, res);
-				log("SERVER", LOG.SINGLE_DRAW_BROADCAST, res);
+				room.tableCells = new Array(9);
 			}
 			
 		}

@@ -10,16 +10,16 @@ import { SettingsContext } from '../context/settingsContext'
 import { SocketContext } from '../context/socketContext'
 import { ACTIONS } from "../utils/enums"
 import { TableContext } from '../context/tableContext'
+import { PropertiesContext } from '../context/propertiesContext'
 
 export default function Home() {
 
 	const theme = useContext(AppContext).props.theme;
 
-	const { actions: { setYourId, setAgainstId }, } = useContext(SettingsContext);
+	const { actions: { setYourId, setAgainstId, switchPlayingMode }, props: {playingMode} } = useContext(SettingsContext);
 	const { actions: { switchMarkerType, setIsIdle }, props: { markerType } } = useContext(AppContext);
-	const { actions: { switchPlayingMode }, props: {playingMode} } = useContext(SettingsContext);
-	const { actions: { emptyTableCells } } = useContext(TableContext);
-	const { actions: { addTableCell } } = useContext(TableContext);
+	const { actions: { emptyTableCells, addTableCell } } = useContext(TableContext);
+	const { actions: { setDraws, setOWins, setXWins }} = useContext(PropertiesContext);
 	const socket = useContext(SocketContext);
 
 	const connectionResponseHandler = useCallback((userId)=>{
@@ -44,14 +44,24 @@ export default function Home() {
 	const leaveRoomBroadcastHandler = useCallback(()=>{
 		setIsIdle(true);
 		emptyTableCells();
+		setDraws(0);
+		setOWins(0);
+		setXWins(0);
 	}, []);
 
 	const singleDrawBroadcastHandler = useCallback((res)=>{
-		console.log(res);
+		setDraws(res.draws);
+		setTimeout(() => {
+			emptyTableCells();
+		}, 2500);
 	}, []);
 
 	const singleWinBroadcastHandler = useCallback((res)=>{
+		!!res.xWins ? setXWins(res.xWins) : setOWins(res.oWins);
 		console.log(res);
+		setTimeout(() => {
+			emptyTableCells();
+		}, 2500);
 	}, []);
 
 
