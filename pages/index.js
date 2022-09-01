@@ -44,7 +44,17 @@ export default function Home() {
 	const leaveRoomBroadcastHandler = useCallback(()=>{
 		setIsIdle(true);
 		emptyTableCells();
-	}, [])
+	}, []);
+
+	const singleDrawBroadcastHandler = useCallback((res)=>{
+		console.log(res);
+	}, []);
+
+	const singleWinBroadcastHandler = useCallback((res)=>{
+		console.log(res);
+	}, []);
+
+
 
 	socket.off(ACTIONS.CONNECTION_RESPONSE)
 	socket.on(ACTIONS.CONNECTION_RESPONSE, ({ userId }) => {
@@ -58,7 +68,13 @@ export default function Home() {
 			socket.on(ACTIONS.NEW_MOVE_BROADCAST, newMoveBroadcastHandler);
 			
 			socket.off(ACTIONS.LEAVE_ROOM_BROADCAST)
-			socket.on(ACTIONS.LEAVE_ROOM_BROADCAST, leaveRoomBroadcastHandler)
+			socket.on(ACTIONS.LEAVE_ROOM_BROADCAST, leaveRoomBroadcastHandler);
+
+			socket.off(ACTIONS.SINGLE_DRAW_BROADCAST);
+			socket.on(ACTIONS.SINGLE_DRAW_BROADCAST, singleDrawBroadcastHandler);
+
+			socket.off(ACTIONS.SINGLE_WIN_BROADCAST);
+			socket.on(ACTIONS.SINGLE_WIN_BROADCAST, singleWinBroadcastHandler);
 		
 		});
 		

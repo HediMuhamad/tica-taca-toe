@@ -39,6 +39,43 @@ function getRandomId(){
 	return parseInt(currentId);
 }
 
+function checkForFinishing(table){
+
+	const winningCellChains = [
+		[0, 1, 2],
+		[3, 4, 5],
+		[6, 7, 8],
+		[0, 3, 6],
+		[1, 4, 7],
+		[2, 5, 8],
+		[0, 4, 8],
+		[2, 4 ,6],
+	]
+
+	for(let v of winningCellChains){
+		if(doesTheyEqual(...v)){
+			return {winner: true, cells: v}
+		}
+	}
+
+	return doesAllCellsFilled() ? {drew: true} : false;
+
+	function doesTheyEqual(a, b, c){
+		return table[a] ? (table[a]===table[b] && table[b]===table[c]) : false;
+	}
+
+	function doesAllCellsFilled(){
+		for(let i of table){
+			if(!i){
+				return false;
+			}
+		}
+
+		return true;
+	}
+	
+}
+
 
 //User Functions
 function createNewUser(socket){
@@ -270,13 +307,33 @@ io.on(ACTIONS.CONNECTION, (socket)=>{
 		log("SERVER", LOG.NEW_MOVE_REQUEST, {user: socket.userId, ...req});
 		const index = req.index;
 		const room = rooms[user.roomId];
-		if(room && !room.tableCells[index]){
+		if(index+1 && room && !room.tableCells[index]){
 			const markerType = room.xRole.userId==socket.userId ? "X" : "O";
 			room.tableCells[index]=markerType;
 			
-			const res = {index, markerType};
-			io.in(user.roomId).emit(ACTIONS.NEW_MOVE_BROADCAST, res);
-			log("SERVER", LOG.NEW_MOVE_BROADCAST, {user: socket.userId, ...res})
+			const newMoveBroadcastResponse = {index, markerType};
+			io.in(user.roomId).emit(ACTIONS.NEW_MOVE_BROADCAST, newMoveBroadcastResponse);
+			log("SERVER", LOG.NEW_MOVE_BROADCAST, {user: socket.userId, ...newMoveBroadcastResponse})
+			
+			const finishResult = checkForFinishing(room.tableCells);
+			if(finishResult && finishResult.winner){
+				const res = {cells: finishResult.cells};
+				if(markerType==="X"){
+					room.xWins+=1;
+					res.xWins=room.xWins;
+				}else{
+					room.oWins+=1;
+					res.oWins=room.oWins;
+				}
+				io.in(user.roomId).emit(ACTIONS.SINGLE_WIN_BROADCAST, res);
+				log("SERVER", LOG.SINGLE_WIN_BROADCAST, res)
+			}else if(finishResult && finishResult.drew){
+				room.draws+=1;
+				const res = { draws:room.draws } 
+				io.in(user.roomId).emit(ACTIONS.SINGLE_DRAW_BROADCAST, res);
+				log("SERVER", LOG.SINGLE_DRAW_BROADCAST, res);
+			}
+			
 		}
 	} )
 
